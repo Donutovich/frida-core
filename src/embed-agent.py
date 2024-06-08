@@ -29,7 +29,7 @@ def main(argv):
     if host_os == "windows":
         for agent, flavor in [(agent_modern, "64"),
                               (agent_legacy, "32")]:
-            embedded_agent = priv_dir / f"frida-agent-{flavor}.dll"
+            embedded_agent = priv_dir / f"adirf-agent-{flavor}.dll"
             embedded_dbghelp = priv_dir / f"dbghelp-{flavor}.dll"
             embedded_symsrv = priv_dir / f"symsrv-{flavor}.dll"
 
@@ -51,7 +51,7 @@ def main(argv):
 
             embedded_assets += [embedded_agent, embedded_dbghelp, embedded_symsrv]
     elif host_os in {"macos", "ios", "watchos", "tvos"}:
-        embedded_agent = priv_dir / "frida-agent.dylib"
+        embedded_agent = priv_dir / "adirf-agent.dylib"
         if agent_modern is not None and agent_legacy is not None:
             subprocess.run(lipo + [agent_modern, agent_legacy, "-create", "-output", embedded_agent],
                            check=True)
@@ -65,14 +65,14 @@ def main(argv):
                               (agent_legacy, "32"),
                               (agent_emulated_modern, "arm64"),
                               (agent_emulated_legacy, "arm")]:
-            embedded_agent = priv_dir / f"frida-agent-{flavor}.so"
+            embedded_agent = priv_dir / f"adirf-agent-{flavor}.so"
             if agent is not None:
                 shutil.copy(agent, embedded_agent)
             else:
                 embedded_agent.write_bytes(b"")
             embedded_assets += [embedded_agent]
     elif host_os in {"freebsd", "qnx"}:
-        embedded_agent = priv_dir / "frida-agent.so"
+        embedded_agent = priv_dir / "adirf-agent.so"
         agent = agent_modern if agent_modern is not None else agent_legacy
         shutil.copy(agent, embedded_agent)
         embedded_assets += [embedded_agent]

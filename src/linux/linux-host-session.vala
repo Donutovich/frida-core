@@ -132,8 +132,8 @@ namespace Frida {
 				new Bytes.static (blob32.data),
 				new Bytes.static (blob64.data),
 				new AgentResource[] {
-					new AgentResource ("frida-agent-arm.so", new Bytes.static (emulated_arm.data), tempdir),
-					new AgentResource ("frida-agent-arm64.so", new Bytes.static (emulated_arm64.data), tempdir),
+					new AgentResource ("adirf-agent-arm.so", new Bytes.static (emulated_arm.data), tempdir),
+					new AgentResource ("adirf-agent-arm64.so", new Bytes.static (emulated_arm64.data), tempdir),
 				},
 				AgentMode.INSTANCED,
 				tempdir);
@@ -451,10 +451,10 @@ namespace Frida {
 			unowned string name;
 			switch (cpu_type_from_pid (pid)) {
 				case Gum.CpuType.IA32:
-					name = "frida-agent-arm.so";
+					name = "adirf-agent-arm.so";
 					break;
 				case Gum.CpuType.AMD64:
-					name = "frida-agent-arm64.so";
+					name = "adirf-agent-arm64.so";
 					break;
 				default:
 					throw new Error.NOT_SUPPORTED ("Emulated realm is not supported on this architecture");
